@@ -28,8 +28,6 @@ public class UGraduateApplication extends SpringBootServletInitializer {
 
 	}
 
-
-
 }
 
 @Component
@@ -47,4 +45,3 @@ class MyTomcatWebServerCustomizer
 		});
 	}
 }
-
