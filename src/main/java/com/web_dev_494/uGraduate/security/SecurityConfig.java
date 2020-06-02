@@ -47,8 +47,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
         // this first line is making sure all /admin/ mappings can only be used by "ADMIN" users
         http
                 .authorizeRequests().antMatchers("/**").permitAll()
-        .and()
-        .cors().and().csrf().disable();;
+        .and().csrf().disable();
 
     }
 }

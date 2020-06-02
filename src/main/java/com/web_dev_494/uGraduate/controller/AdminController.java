@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api")
 public class AdminController {
@@ -61,6 +62,7 @@ public class AdminController {
         return professorService.findAll();
     }
 
+    @CrossOrigin
     @GetMapping("/sections")
     public List<Section> getAllSections(){
         return sectionService.findAll();
@@ -127,6 +129,7 @@ public class AdminController {
         studentService.save(student);
         return student;
     }
+
     @PutMapping("/sections")
     public Section updateSection(@RequestBody Section section){
         sectionService.save(section);
