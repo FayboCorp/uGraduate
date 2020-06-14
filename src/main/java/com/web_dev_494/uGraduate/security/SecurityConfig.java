@@ -2,6 +2,7 @@ package com.web_dev_494.uGraduate.security;
 
 // Security Configuration class. Updates roles and assigns security to classpaths
 import com.web_dev_494.uGraduate.repo.UserDetailsServiceImpl;
+import com.web_dev_494.uGraduate.security.jwt.JwtTokenVerifier;
 import com.web_dev_494.uGraduate.security.jwt.JwtUsernameAndPasswordAuthFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -62,6 +63,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilter(new JwtUsernameAndPasswordAuthFilter(authenticationManager()))
+                .addFilterAfter(new JwtTokenVerifier(), JwtUsernameAndPasswordAuthFilter.class)
                 .authorizeRequests()
                 .antMatchers("/**")
                 .hasRole("ADMIN")

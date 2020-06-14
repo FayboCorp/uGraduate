@@ -1,12 +1,15 @@
 package com.web_dev_494.uGraduate.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.web_dev_494.uGraduate.entity.Authorities;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -16,10 +19,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 public class JwtUsernameAndPasswordAuthFilter extends UsernamePasswordAuthenticationFilter {
 
+
     private final AuthenticationManager authenticationManager;
+
 
     public JwtUsernameAndPasswordAuthFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
@@ -29,7 +35,7 @@ public class JwtUsernameAndPasswordAuthFilter extends UsernamePasswordAuthentica
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response) throws AuthenticationException {
         try {
-            System.out.println("**************************");
+            System.out.println("******* IN JWTFILTER *******");
             UsernameAndPasswordRequest authRequest =
                     new ObjectMapper().readValue(request.getInputStream(), UsernameAndPasswordRequest.class);
 
@@ -37,6 +43,10 @@ public class JwtUsernameAndPasswordAuthFilter extends UsernamePasswordAuthentica
                     authRequest.getUsername(),
                     authRequest.getPassword()
             );
+
+            System.out.println("Got from Body.. Username: " + authRequest.getUsername() + " and " +
+                    "Password: " + authRequest.getPassword());
+
             Authentication authenticated = authenticationManager.authenticate(authentication);
 
             return authenticated;
@@ -48,18 +58,22 @@ public class JwtUsernameAndPasswordAuthFilter extends UsernamePasswordAuthentica
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request,
+                                            HttpServletResponse response, FilterChain chain,
+                                            Authentication authResult) throws IOException, ServletException {
+
+        final String ROLES =  authResult.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
 
         String token = Jwts.builder()
-                .setSubject(authResult.getName())
-                .setIssuedAt(new Date())
-                .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusWeeks(2)))
+                .setSubject(authResult.getName()) // Subject is username
+                .claim("authorities", ROLES) // Gives you the roles
+                .setIssuedAt(new Date()) // Issue date
+                .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusWeeks(2))) // JWT expires?
                 .signWith(Keys.hmacShaKeyFor("securesecuresecuresecuresecuresecuresecuresecure".getBytes()))
                 .compact();
 
-
         response.addHeader("Authorization", "Bearer " + token);
 
-        super.successfulAuthentication(request, response, chain, authResult);
     }
+
 }
