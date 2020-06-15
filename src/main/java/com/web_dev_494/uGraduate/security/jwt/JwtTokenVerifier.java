@@ -50,7 +50,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 
             Jws<Claims> claimsJws =
                     Jwts.parserBuilder()
-                    .setSigningKey(secretKey)
+                    .setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes()))
                     .build()
                     .parseClaimsJws(token);
 
@@ -70,6 +70,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
             );
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            filterChain.doFilter(request, response);
         }
 
         catch (JwtException e){
