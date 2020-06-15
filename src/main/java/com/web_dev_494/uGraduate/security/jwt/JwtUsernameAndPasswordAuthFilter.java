@@ -21,12 +21,14 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+
+// added into websecurityconfig as a filter
 public class JwtUsernameAndPasswordAuthFilter extends UsernamePasswordAuthenticationFilter {
 
 
     private final AuthenticationManager authenticationManager;
 
-
+    // Don't autowire because you're getting the instance by extending websecurity in SecurityConfig.java
     public JwtUsernameAndPasswordAuthFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
@@ -35,17 +37,16 @@ public class JwtUsernameAndPasswordAuthFilter extends UsernamePasswordAuthentica
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response) throws AuthenticationException {
         try {
-            System.out.println("******* IN JWTFILTER *******");
+            //System.out.println("******* IN JWTFILTER *******");
+            // POST request on localhost:8080/login with json body of just username/password
             UsernameAndPasswordRequest authRequest =
                     new ObjectMapper().readValue(request.getInputStream(), UsernameAndPasswordRequest.class);
 
+            // Auth object that will later be passed into authentication manager
             Authentication authentication = new UsernamePasswordAuthenticationToken(
                     authRequest.getUsername(),
                     authRequest.getPassword()
             );
-
-            System.out.println("Got from Body.. Username: " + authRequest.getUsername() + " and " +
-                    "Password: " + authRequest.getPassword());
 
             Authentication authenticated = authenticationManager.authenticate(authentication);
 
@@ -57,23 +58,29 @@ public class JwtUsernameAndPasswordAuthFilter extends UsernamePasswordAuthentica
         }
     }
 
+    // On successful authentication..
     @Override
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response, FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
 
-        final String ROLES =  authResult.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
+        final String ROLES =  authResult.getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
 
+        // Build JWT Token that is passed in the headers.
         String token = Jwts.builder()
                 .setSubject(authResult.getName()) // Subject is username
                 .claim("authorities", ROLES) // Gives you the roles
                 .setIssuedAt(new Date()) // Issue date
-                .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusWeeks(2))) // JWT expires?
-                .signWith(Keys.hmacShaKeyFor("securesecuresecuresecuresecuresecuresecuresecure".getBytes()))
+                .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusWeeks(2))) // JWT expires when?
+                .signWith(Keys
+                        .hmacShaKeyFor("securesecuresecuresecuresecuresecuresecuresecure".getBytes()))
+                        // Obviously, This is not a good secret key
                 .compact();
 
         response.addHeader("Authorization", "Bearer " + token);
 
     }
-
 }

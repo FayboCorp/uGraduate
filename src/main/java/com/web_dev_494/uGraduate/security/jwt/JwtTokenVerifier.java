@@ -34,7 +34,6 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         String header = request.getHeader("Authorization");
-        System.out.println(header);
         if(!request.getHeader("Authorization").startsWith("Bearer ")
                 || request.getHeader("Authorization") == null
                 || request.getHeader("Authorization").isEmpty()){
@@ -46,7 +45,6 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
         String token = header.replace("Bearer ", ""); // Remove Bearer from Response
         String secretKey = "securesecuresecuresecuresecuresecuresecuresecure";
         try{
-            System.out.println("Before");
 
             Jws<Claims> claimsJws =
                     Jwts.parserBuilder()
@@ -56,8 +54,8 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 
             Claims body = claimsJws.getBody();
             String username = body.getSubject();
-            System.out.println("~~~~~~~In JWT TOKEN VERIFIER~~~~~~~~~~~~~~~");
-            System.out.println("username: " + username);
+            //System.out.println("~~~~~~~In JWT TOKEN VERIFIER~~~~~~~~~~~~~~~");
+            //System.out.println("username: " + username);
             Collection authorities =
                     Arrays.stream(body.get("authorities").toString().split(","))
                     .map(SimpleGrantedAuthority::new)
