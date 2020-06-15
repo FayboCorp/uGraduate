@@ -17,6 +17,22 @@ public class SectionServiceFunctionality implements SectionService {
 		this.sectionDAO = sectionDAO;
 	}
 
+	private int convertMajor(String name){
+		switch (name) {
+			case "Computer Science":
+				return 1;
+			case "Psychology":
+				return 2;
+			case "Industrial Design":
+				return 3;
+			case "Business":
+				return 4;
+			case "Economics":
+				return 5;
+		}
+		return -1;
+	}
+
 	@Override
 	public void save(Section section) {
 		sectionDAO.save(section);
@@ -48,8 +64,8 @@ public class SectionServiceFunctionality implements SectionService {
 	}
 
 	@Override
-	public List<Section> findByMajor(int name) {
-		return sectionDAO.findByMajor(name);
+	public List<Section> findByMajor(String name) {
+		return sectionDAO.findByMajor(convertMajor(name));
 	}
 
 	@Override

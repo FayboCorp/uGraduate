@@ -71,7 +71,7 @@ public class StudentController {
 		student = studentService.findByUsername(user.getUsername());
 		model.addAttribute("student", student);
 
-		List<Section> sections = sectionService.findByMajor(convertMajor(student.getMajor()));
+		List<Section> sections = sectionService.findByMajor(student.getMajor());
 		model.addAttribute("sections", sections);
 		return "student_mappings/course-list";
 	}
@@ -82,7 +82,7 @@ public class StudentController {
 		student = studentService.findByUsername(user.getUsername());
 		model.addAttribute(student);
 
-		List<Section> sections = sectionService.findByMajor(convertMajor(student.getMajor()));
+		List<Section> sections = sectionService.findByMajor(student.getMajor());
 		model.addAttribute("sections", sections);
 
 		return "student_mappings/register";

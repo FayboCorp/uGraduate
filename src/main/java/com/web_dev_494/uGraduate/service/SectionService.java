@@ -11,7 +11,7 @@ public interface SectionService{
 		public void deleteByCRN(int CRN);
 		public List<Section> findByName(String name);
 		public void deleteByName(String name);
-		public List<Section> findByMajor(int name);
+		public List<Section> findByMajor(String name);
 		List<Section> findAll();
 	List<Section> findByStudent(String username);
 

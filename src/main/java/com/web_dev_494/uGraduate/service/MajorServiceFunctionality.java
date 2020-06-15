@@ -24,6 +24,7 @@ public class MajorServiceFunctionality implements MajorService {
 
     @Override
     public void save(Major major) {
+
         majorDAO.save(major);
     }
 
