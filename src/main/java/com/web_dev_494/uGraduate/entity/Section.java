@@ -41,6 +41,9 @@ public class Section {
 	@JsonIgnore
 	private List<Student> students;
 
+	@Column(name = "section_description")
+	private String sectionDescription;
+
 
 	 public Section(){
 
@@ -95,6 +98,14 @@ public class Section {
 		}
 
 	 	students.add(student);
+	}
+
+	public String getSectionDescription() {
+		return sectionDescription;
+	}
+
+	public void setSectionDescription(String sectionDescription) {
+		this.sectionDescription = sectionDescription;
 	}
 
 	@Override
