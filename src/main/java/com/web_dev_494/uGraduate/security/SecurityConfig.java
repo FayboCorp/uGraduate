@@ -24,11 +24,12 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 // Order here is important. In order to have multiple mvcmatchers on different map heirarchies
 class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    // Field Injection is not Recommended BUT I was getting a bean cycle error and this was the only way to fix it
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
-
 
     // TODO: Change this to bcrypt
     @Bean
@@ -51,7 +52,6 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
         return provider;
     }
 
-    // TODO: Fix xss. vulnerable if using /advisor/XSSEXAMPLE
     // Configures roles on endpoints
     @Override
     protected void configure(HttpSecurity http) throws Exception{
