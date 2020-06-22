@@ -17,11 +17,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.web.cors.CorsConfiguration;
 
 @EnableWebSecurity
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-// Order here is important. In order to have multiple mvcmatchers on different map heirarchies
 class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     // Field Injection is not Recommended BUT I was getting a bean cycle error and this was the only way to fix it
@@ -52,6 +52,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
         return provider;
     }
 
+
     // Configures roles on endpoints
     @Override
     protected void configure(HttpSecurity http) throws Exception{
@@ -60,6 +61,9 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 //.and()
                 .csrf().disable()
+                //.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+                .cors()
+                .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilter(new JwtUsernameAndPasswordAuthFilter(authenticationManager()))

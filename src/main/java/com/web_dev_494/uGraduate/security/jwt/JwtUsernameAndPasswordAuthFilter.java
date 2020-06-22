@@ -14,6 +14,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -25,7 +26,7 @@ import java.util.stream.Collectors;
 // added into websecurityconfig as a filter
 public class JwtUsernameAndPasswordAuthFilter extends UsernamePasswordAuthenticationFilter {
 
-
+    private final String ORIGIN = "Origin";
     private final AuthenticationManager authenticationManager;
 
     // Don't autowire because you're getting the instance by extending websecurity in SecurityConfig.java
@@ -36,6 +37,8 @@ public class JwtUsernameAndPasswordAuthFilter extends UsernamePasswordAuthentica
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response) throws AuthenticationException {
+        // TODO: trying to figure out the CORS to expose headers
+
         try {
             //System.out.println("******* IN JWTFILTER *******");
             // POST request on localhost:8080/login with json body of just username/password
@@ -80,7 +83,9 @@ public class JwtUsernameAndPasswordAuthFilter extends UsernamePasswordAuthentica
                         // Obviously, This is not a good secret key
                 .compact();
 
-        response.addHeader("Authorization", "Bearer " + token);
+        response.addHeader("Authorization", token);
+        //Cookie cookie = new Cookie("Authorization", "Bearer" + token);
+        //response.addCookie(cookie);
 
     }
 }
