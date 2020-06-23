@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 // added into websecurityconfig as a filter
 public class JwtUsernameAndPasswordAuthFilter extends UsernamePasswordAuthenticationFilter {
 
-    private final String ORIGIN = "Origin";
     private final AuthenticationManager authenticationManager;
 
     // Don't autowire because you're getting the instance by extending websecurity in SecurityConfig.java
@@ -83,7 +82,7 @@ public class JwtUsernameAndPasswordAuthFilter extends UsernamePasswordAuthentica
                         // Obviously, This is not a good secret key
                 .compact();
 
-        response.addHeader("Authorization", token);
+        response.addHeader("Authorization", "Bearer " + token);
         //Cookie cookie = new Cookie("Authorization", "Bearer" + token);
         //response.addCookie(cookie);
 
