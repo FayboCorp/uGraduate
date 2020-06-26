@@ -44,12 +44,13 @@ public class Section {
 	@Column(name = "section_description")
 	private String sectionDescription;
 
+	@Column( name = "meet_times")
+	private String meetTimes;
 
-	 public Section(){
+	public Section(){
 
-	 }
+	}
 
-	 //how to handle assigning the students array list
 	 public Section(String className){
 		 this.className = className;
 	 }
@@ -116,5 +117,11 @@ public class Section {
 				'}';
 	}
 
+	public String getMeetTimes() {
+		return meetTimes;
+	}
 
+	public void setMeetTimes(String meetTimes) {
+		this.meetTimes = meetTimes;
+	}
 }

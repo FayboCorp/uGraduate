@@ -40,6 +40,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 
             filterChain.doFilter(request,response);
             System.out.println("Fails in JWT TOKEN VERIFIER");
+            System.out.println();
             return;
         }
         String token = header.replace("Bearer ", ""); // Remove Bearer from Response
