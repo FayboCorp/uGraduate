@@ -66,7 +66,7 @@ public class StudentDAOFunctionality implements StudentDAO {
 
             String newUsername = student.getFirstName().charAt(0) + student.getLastName() + student.getId();
             student.setUsername(newUsername);
-
+            System.out.println("New Student: " + student.toString());
             user.setUsername(newUsername);
 
             currentSession.save(student);

@@ -37,7 +37,6 @@ public class Student{
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "crn_")
     )
-
     private List<Section> sections;
 
     // TODO: Many to one for Major

@@ -72,4 +72,13 @@ public class RestStudentController {
 
     }
 
+    @GetMapping("/register")
+    public List<Section> registeredList() {
+
+        instantiateStudent((String)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        List<Section> sections = sectionService.findByStudent(this.student.getUsername());
+
+        return sections;
+    }
+
 }

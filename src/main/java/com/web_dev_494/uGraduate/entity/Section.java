@@ -1,6 +1,5 @@
 package com.web_dev_494.uGraduate.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
@@ -44,8 +43,11 @@ public class Section {
 	@Column(name = "section_description")
 	private String sectionDescription;
 
-	@Column( name = "meet_times")
+	@Column( name = "section_time")
 	private String meetTimes;
+
+	@Column(name="section_day")
+	private String meetDays;
 
 	public Section(){
 
@@ -123,5 +125,13 @@ public class Section {
 
 	public void setMeetTimes(String meetTimes) {
 		this.meetTimes = meetTimes;
+	}
+
+	public String getMeetDays() {
+		return meetDays;
+	}
+
+	public void setMeetDays(String meetDays) {
+		this.meetDays = meetDays;
 	}
 }

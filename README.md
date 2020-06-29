@@ -25,7 +25,7 @@ If you want to test it and run it, feel free to. If you open create_database.md 
 run that script in the mysql workbench to create the database I have been using. Import this file as a MAVEN 
 project and all your dependencies will already be important after your IDE indexes.  
 
-Example HTTP requests 
+Demo HTTP requests 
 
 POST localhost:8080/api/students
 {
