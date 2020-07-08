@@ -1,14 +1,11 @@
 package com.web_dev_494.uGraduate.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name="student")
-public class Student{
+public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

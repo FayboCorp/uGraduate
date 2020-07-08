@@ -153,6 +153,13 @@ public class AdminController {
         sectionService.save(section);
     }
 
+    @GetMapping("/testQueries")
+    public void testQueries(){
+        System.out.println("In testQueries");
+        // TODO: Create DAO and Service Interfaces for CompletedSections class
+
+    }
+
     // New student          PostMapping /students
     // New professor        PostMapping /professors
     // New Section          PostMapping /sections
