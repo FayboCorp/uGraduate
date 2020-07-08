@@ -8,6 +8,7 @@ import com.web_dev_494.uGraduate.exceptions.ErrorResponse;
 import com.web_dev_494.uGraduate.exceptions.ProfessorNotFound;
 import com.web_dev_494.uGraduate.exceptions.SectionNotFound;
 import com.web_dev_494.uGraduate.exceptions.StudentNotFound;
+import com.web_dev_494.uGraduate.service.CompletedService;
 import com.web_dev_494.uGraduate.service.ProfessorService;
 import com.web_dev_494.uGraduate.service.SectionService;
 import com.web_dev_494.uGraduate.service.StudentService;
@@ -27,13 +28,15 @@ public class AdminController {
     private StudentService studentService;
     private ProfessorService professorService;
     private SectionService sectionService;
+    private CompletedService completedService;
 
     @Autowired
     public AdminController(StudentService studentService, SectionService sectionService,
-                           ProfessorService professorService){
+                           ProfessorService professorService, CompletedService completedService){
         this.professorService = professorService;
         this.studentService = studentService;
         this.sectionService = sectionService;
+        this.completedService = completedService;
     }
 
     private int convertMajor(String name){
@@ -157,6 +160,7 @@ public class AdminController {
     public void testQueries(){
         System.out.println("In testQueries");
         // TODO: Create DAO and Service Interfaces for CompletedSections class
+        completedService.getGrade(0, 0);
 
     }
 

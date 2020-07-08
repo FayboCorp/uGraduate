@@ -2,7 +2,6 @@ package com.web_dev_494.uGraduate.dao;
 
 import com.web_dev_494.uGraduate.entity.Major;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
