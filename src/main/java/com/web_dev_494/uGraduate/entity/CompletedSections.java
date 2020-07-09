@@ -10,13 +10,17 @@ import java.io.Serializable;
 public class CompletedSections implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH,
             CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name="student_id")
     @JsonIgnore
     private Student student;
 
-    @Id
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH,
             CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name="crn_")
@@ -28,6 +32,13 @@ public class CompletedSections implements Serializable {
 
     public CompletedSections() {
     }
+
+    public CompletedSections(String grade, Student student, Section section){
+        this.grade = grade;
+        this.student = student;
+        this.section = section;
+    }
+
 
     public Student getStudent() {
         return student;
@@ -51,6 +62,14 @@ public class CompletedSections implements Serializable {
 
     public void setGrade(String grade) {
         this.grade = grade;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

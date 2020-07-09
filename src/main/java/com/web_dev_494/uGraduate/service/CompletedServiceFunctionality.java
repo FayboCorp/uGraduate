@@ -19,4 +19,9 @@ public class CompletedServiceFunctionality implements CompletedService {
         System.out.println("In service class");
         return completedDAO.getGrade(crn, studentId);
     }
+
+    @Override
+    public void completeClass(String grade, int studentId, int crn) {
+        completedDAO.completeClass(grade, studentId, crn);
+    }
 }
