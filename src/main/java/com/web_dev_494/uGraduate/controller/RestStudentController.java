@@ -1,14 +1,13 @@
 package com.web_dev_494.uGraduate.controller;
 
+import com.web_dev_494.uGraduate.entity.CompletedSections;
 import com.web_dev_494.uGraduate.entity.Section;
 import com.web_dev_494.uGraduate.entity.Student;
-import com.web_dev_494.uGraduate.entity.User;
+import com.web_dev_494.uGraduate.service.CompletedService;
 import com.web_dev_494.uGraduate.service.MajorService;
 import com.web_dev_494.uGraduate.service.SectionService;
 import com.web_dev_494.uGraduate.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +15,8 @@ import java.util.List;
 
 /*
 TODO:
- - Create an in-memory section-time tracker for the "scheduler" webpage
- - Refactor the Section entity to have time slots <----
+ - Finish making this completed courses.
+ - maybe populate the database a bit more?
 
  */
 
@@ -29,13 +28,15 @@ public class RestStudentController {
     private MajorService majorService;
     private SectionService sectionService;
     private Student student;
+    private CompletedService completedService;
 
     @Autowired
     public RestStudentController(StudentService studentService,
-                                 MajorService majorService, SectionService sectionService){
+                                 MajorService majorService, SectionService sectionService, CompletedService completedService){
         this.studentService = studentService;
         this.majorService = majorService;
         this.sectionService = sectionService;
+        this.completedService = completedService;
     }
 
     // Singleton Pattern(ish). Makes sure there is only 1 instance of student for tracking purposes
@@ -78,6 +79,15 @@ public class RestStudentController {
         instantiateStudent((String)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         List<Section> sections = sectionService.findByStudent(this.student.getUsername());
 
+        return sections;
+    }
+
+    @GetMapping("/passed")
+    public List<CompletedSections> passedCourses() {
+
+        instantiateStudent((String)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        List<CompletedSections> sections = completedService.getClasses(this.student.getId());
+        System.out.println(sections);
         return sections;
     }
 

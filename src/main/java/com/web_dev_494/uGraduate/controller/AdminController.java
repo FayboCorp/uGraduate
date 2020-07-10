@@ -102,6 +102,7 @@ public class AdminController {
         return section;
     }
 
+    // adding a student
     @PostMapping("/students")
     public Student newStudent(@RequestBody Student student){
 
@@ -138,6 +139,7 @@ public class AdminController {
         sectionService.save(section);
         return section;
     }
+
     @PutMapping("/professors")
     public Professor updateProfessor(@RequestBody Professor professor){
         professorService.save(professor);
@@ -160,7 +162,7 @@ public class AdminController {
     public void testQueries(){
         System.out.println("In testQueries");
         // TODO: Create DAO and Service Interfaces for CompletedSections class
-        completedService.getGrade(0, 0);
+        completedService.completeClass("C", 1, 7);
 
     }
 
