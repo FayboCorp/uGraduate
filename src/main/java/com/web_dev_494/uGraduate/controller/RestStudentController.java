@@ -51,6 +51,7 @@ public class RestStudentController {
 
         instantiateStudent((String)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         List<Section> sections = sectionService.findByStudent(this.student.getUsername());
+
         return sections;
     }
 
@@ -70,7 +71,21 @@ public class RestStudentController {
         studentService.save(this.student);
 
         return section;
+    }
 
+    @DeleteMapping("/register/{CRN}")
+    public Section dropClass(@PathVariable int CRN){
+        instantiateStudent((String)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+
+        Student studentS = studentService.findById(this.student.getId());
+        Section section = sectionService.findByCRN(CRN);
+
+        section.removeStudent(studentS);
+
+        sectionService.dropStudent(section);
+        studentService.dropClass(studentS);
+
+        return section;
     }
 
     @GetMapping("/register")

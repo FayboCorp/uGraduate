@@ -48,6 +48,15 @@ public class StudentDAOFunctionality implements StudentDAO {
 
     @Override
     @Transactional
+    public void dropClass(Student student){
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        currentSession.merge(student);
+
+    }
+
+    @Override
+    @Transactional
     public void save(Student student){
         Session currentSession = entityManager.unwrap(Session.class);
         if(student.getId() == 0){

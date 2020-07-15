@@ -22,13 +22,22 @@ public class SectionDAOFunctionality implements SectionDAO {
 	        this.entityManager = entityManager;
 	    }
 
-	    @Override
-		 public void save(Section section) {
+	@Override
+	 public void save(Section section) {
 
-	    	 Session currentSession = entityManager.unwrap(Session.class);
+		 Session currentSession = entityManager.unwrap(Session.class);
 
-	         currentSession.saveOrUpdate(section);
-		 }
+		 currentSession.saveOrUpdate(section);
+	 }
+
+	@Override
+	public void dropStudent(Section section) {
+
+		Session currentSession = entityManager.unwrap(Session.class);
+
+		currentSession.merge(section);
+
+	}
 
 	@Override
 	public Section findByCRN(int CRN) {
@@ -71,8 +80,6 @@ public class SectionDAOFunctionality implements SectionDAO {
 	public List<Section> findByStudent(String username) {
 	    Session session = entityManager.unwrap(Session.class);
 
-		System.out.println("looking for " + username);
-
 		// TODO: Figure out this many to many query
 	    Query query = session.createQuery("SELECT s FROM Section s JOIN s.students a WHERE " +
 				"a.username=:susername");
@@ -83,11 +90,12 @@ public class SectionDAOFunctionality implements SectionDAO {
 
 	@Override
 	public void deleteByName(String name) {
-
 	}
 
 	@Override
-	public void deleteByCRN(int id) {
+	public void deleteByCRN(int id){
 
 	}
+
+
 }

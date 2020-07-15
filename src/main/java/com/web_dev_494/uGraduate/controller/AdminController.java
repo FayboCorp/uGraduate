@@ -161,8 +161,8 @@ public class AdminController {
     @GetMapping("/testQueries")
     public void testQueries(){
         System.out.println("In testQueries");
-        // TODO: Create DAO and Service Interfaces for CompletedSections class
-        completedService.completeClass("C", 1, 7);
+
+        // completedService.completeClass("C", 1, 7);
 
     }
 

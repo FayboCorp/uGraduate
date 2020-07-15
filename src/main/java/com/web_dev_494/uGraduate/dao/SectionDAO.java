@@ -19,6 +19,7 @@ public interface SectionDAO {
 	public List<Section> findByMajor(int name);
 	List<Section> findAll();
 	List<Section> findByStudent(String username);
+	void dropStudent(Section section);
 
 
 }

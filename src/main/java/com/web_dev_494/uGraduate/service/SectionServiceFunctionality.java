@@ -72,4 +72,9 @@ public class SectionServiceFunctionality implements SectionService {
 	public List<Section> findByStudent(String username) {
 		return sectionDAO.findByStudent(username);
 	}
+
+	@Override
+	public void dropStudent(Section section) {
+		sectionDAO.dropStudent(section);
+	}
 }

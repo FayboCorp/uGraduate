@@ -31,6 +31,11 @@ public class StudentServiceFunctionality implements StudentService {
     }
 
     @Override
+    public void dropClass(Student student) {
+        studentDAO.dropClass(student);
+    }
+
+    @Override
     @Transactional
     public Student findById(int id) {
         return studentDAO.findById(id);

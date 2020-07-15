@@ -101,6 +101,10 @@ public class Student {
         this.sections = sections;
     }
 
+    public void removeSection(Section section){
+        this.sections.remove(section);
+    }
+
     @Override
     public String toString() {
         return "Student{" +

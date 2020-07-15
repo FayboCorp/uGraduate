@@ -12,6 +12,7 @@ public interface StudentService {
     public void deleteById(int id);
     public List<Student> findByName(String name);
     public Student findByUsername(String username);
+    void dropClass(Student student);
 
     public void deleteByName(String name);
 

@@ -13,6 +13,6 @@ public interface StudentDAO {
     public List<Student> findByName(String name);
     public Student findByUsername(String username);
     public void deleteByName(String name);
-
+    void dropClass(Student student);
 
 }

@@ -24,9 +24,6 @@ public class Section {
 	 @JoinColumn(name="professor_id")
 	 private Professor professor;
 
-	 //@ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE,
-	 //		              CascadeType.DETACH, CascadeType.REFRESH})
-	 //@JoinColumn(name = "major_id")
 	@Column(name = "major_id")
 	 private int major;
 
@@ -101,6 +98,16 @@ public class Section {
 		}
 
 	 	students.add(student);
+	}
+
+	public void removeStudent(Student student){
+
+		System.out.println("BEFORE... students: " + this.students + " student: " + student);
+
+		students.remove(student);
+
+		System.out.println("AFTER... students: " + this.students + " student: " + student);
+
 	}
 
 	public String getSectionDescription() {
