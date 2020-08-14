@@ -1,5 +1,7 @@
 uGraduate
 
+Demo: https://youtu.be/-QGqF_Kq7ew
+
 The idea to make this application came to me when I was taking an interdisciplinary course during my Senior year. 
 I was on a team tasked to prototype a redesign for UIC's current registration system. We analyzed 40+ students 
 on how they reacted with the current solutions and discovered a huge flaw. The current system relied on 3 separate
@@ -11,31 +13,15 @@ you connect with your advisor. This was the cause for several pain points and a 
 design a more centralized system (a one stop shop so to speak) that gave students the freedom to see what they 
 needed and the flexibility to let them do what they wanted to do. 
 
-*Note: This project is under reconstruction. I originally built this with Java and Spring on the back end and a 
-very simple wire frame using jsp files to navigate form page to page. I have converted the back end to function 
-as a RESTful service and I am currently teaching myself React so I can make a more interactive user experience.
-
-
 uGraduate is built with Java as the backend and the main programming language. The Spring framework was added to
 the stack and I ended up using Spring MVC, Spring Security, Spring Boot, and a little bit of Spring Data. I used
 Hibernate as the ORM and MySql as the db. I tried to keep relationships semi simple but included everything from 
-one-to-one to many-to-many. 
+one-to-one to many-to-many. JWTs authenticate and authorize. I do not use bcrypt for encryption for data for demo 
+purposes but you just need to change out the password encoder to use bcrypt and spring security should be able to 
+decode. React is on the front end with redux. 
 
-If you want to test it and run it, feel free to. If you open create_database.md on the root directory, you can
-run that script in the mysql workbench to create the database I have been using. Import this file as a MAVEN 
-project and all your dependencies will already be important after your IDE indexes.  
+You can run it yourself if you go on Docker hub and look at all the faybocorp repositories. There are 3. Pull them
+both and run the database first and wait until it spins up otherwise hibernate in the ugraduate container will throw
+exceptions. 
 
-Demo HTTP requests 
-
-POST localhost:8080/api/students
-{
-	
-	"username": "none",
-	"firstName": "James",
-	"lastName": "Holden",
-	"major": "Computer Science"
-	
-}
-
-GET localhost:8080/api/students/{student_id} 
 
